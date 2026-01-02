@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RevalERP Ticket Management System - Manage and track tickets efficiently">
+    <meta name="keywords" content="ERP, Ticket Management, CRM, Dashboard">
+    <link rel="stylesheet" href="style.css">
+    <title>RevalERP - Ticket List</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+  
+</head>
+<body>
+    <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60'%3E%3Ctext x='10' y='40' font-family='Arial' font-size='24' font-weight='bold' fill='white'%3ERevalERP%3C/text%3E%3C/svg%3E" alt="RevalERP Logo">
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#dashboard" id="dashboardNav" class="active">
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#my-tickets" id="myTicketsNav">
+                    <i class="bi bi-ticket-perforated"></i>
+                    <span>My Tickets</span>
+                </a>
+            </li>
+            <li>
+                <a href="#masters" id="mastersNav">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>Masters</span>
+                </a>
+            </li>
+            <li>
+                <a href="#reports" id="reportsNav">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="bi bi-list"></i>
+            </button>
+            <div class="top-nav-right">
+                <button class="btn-login">
+                    <i class="bi bi-check-circle-fill"></i> Login
+                </button>
+                <button class="icon-btn">
+                    <i class="bi bi-bell"></i>
+                </button>
+                <button class="icon-btn">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1 class="page-title" id="pageTitle">
+                    <i class="bi bi-grid-fill"></i>
+                    Ticket List
+                </h1>
+                <button class="btn-extract">
+                    <i class="bi bi-download"></i> Extract
+                </button>
+            </header>
+
+            <!-- Filter Section -->
+            <section class="filter-section" id="filterSection">
+                <div class="row filter-row">
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label class="filter-label">Ticket ID</label>
+                        <input type="text" class="form-control" id="filterTicketId" placeholder="Enter ID">
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label class="filter-label">Ticket Department</label>
+                        <select class="form-select" id="filterDepartment">
+                            <option selected>Select Department</option>
+                            <option>Revalsys System Admin</option>
+                            <option>Support</option>
+                            <option>Development</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label class="filter-label">Sub Ticket Department</label>
+                        <select class="form-select" id="filterSubDepartment">
+                            <option selected>Select Sub Department</option>
+                            <option>Deployment</option>
+                            <option>Release</option>
+                            <option>Data Management</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label class="filter-label">Issue Type</label>
+                        <select class="form-select" id="filterIssueType">
+                            <option selected>Select Type</option>
+                            <option>Production</option>
+                            <option>Development</option>
+                            <option>Testing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <button class="btn-search" id="searchBtn">Search</button>
+                    </div>
+                </div>
+                <div class="advance-search">
+                    <a href="#advanced">Advance Search <i class="bi bi-chevron-down"></i></a>
+                </div>
+            </section>
+
+            <!-- Add Ticket Form (Hidden by default) -->
+            <section class="add-ticket-section" id="addTicketSection" style="display: none;">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2 class="form-title">
+                            <i class="bi bi-arrow-left back-btn" id="backBtn"></i>
+                            Add Ticket
+                        </h2>
+                    </div>
+                    
+                    <form id="addTicketForm">
+                        <div class="row mb-3">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Project<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Project</option>
+                                    <option>Project Alpha</option>
+                                    <option>Project Beta</option>
+                                    <option>Project Gamma</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Module<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Module</option>
+                                    <option>CRM Module</option>
+                                    <option>Finance Module</option>
+                                    <option>HR Module</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Instance<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Instance</option>
+                                    <option>Production</option>
+                                    <option>Development</option>
+                                    <option>Testing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ticket Template Name</label>
+                                <select class="form-select">
+                                    <option value="">Select Template Name</option>
+                                    <option>Configuration Update</option>
+                                    <option>Service Installation</option>
+                                    <option>Bug Report</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ticket Title<span class="required">*</span></label>
+                                <input type="text" class="form-control" placeholder="Enter Title" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Ticket Department<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Department</option>
+                                    <option>Revalsys System Admin</option>
+                                    <option>Support</option>
+                                    <option>Development</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Sub Ticket Department<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Sub Department</option>
+                                    <option>Deployment</option>
+                                    <option>Release</option>
+                                    <option>Data Management</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Issue Type<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Issue Type</option>
+                                    <option>Production</option>
+                                    <option>Development</option>
+                                    <option>Testing</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Priority<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Priority</option>
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ticket Source<span class="required">*</span></label>
+                                <select class="form-select" required>
+                                    <option value="">Select Source*</option>
+                                    <option>Email</option>
+                                    <option>Phone</option>
+                                    <option>Portal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Email CC</label>
+                                <input type="email" class="form-control" placeholder="Enter CC Email">
+                            </div>
+                        </div>
+
+                        <!-- Rich Text Editor Toolbar -->
+                        <div class="editor-section mb-3">
+                            <div class="editor-toolbar">
+                                <button type="button" class="editor-btn" title="Bold">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Italic">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Underline">
+                                    <i class="bi bi-type-underline"></i>
+                                </button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="editor-btn" title="Align Left">
+                                    <i class="bi bi-text-left"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Align Center">
+                                    <i class="bi bi-text-center"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Align Right">
+                                    <i class="bi bi-text-right"></i>
+                                </button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="editor-btn" title="Numbered List">
+                                    <i class="bi bi-list-ol"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Bulleted List">
+                                    <i class="bi bi-list-ul"></i>
+                                </button>
+                                <button type="button" class="editor-btn" title="Indent">
+                                    <i class="bi bi-text-indent-left"></i>
+                                </button>
+                                <span class="toolbar-divider"></span>
+                                <button type="button" class="editor-btn" title="Quote">
+                                    <i class="bi bi-quote"></i>
+                                </button>
+                            </div>
+                            <textarea class="form-control editor-textarea" rows="8" placeholder="Enter ticket description..."></textarea>
+                        </div>
+<!-- File Upload Area -->
+                    <div class="file-upload-area mb-4">
+                        <div class="upload-box" id="uploadBox">
+                            <i class="bi bi-paperclip upload-icon"></i>
+                            <p class="upload-text">
+                                Drag and drop files here or 
+                                <label for="fileInput" class="browse-link">browse</label>
+                            </p>
+                            <input type="file" id="fileInput" multiple hidden>
+                        </div>
+                        <div id="fileList" class="file-list"></div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-save">
+                            <i class="bi bi-check-circle"></i> Save
+                        </button>
+                        <button type="button" class="btn btn-save-send">
+                            <i class="bi bi-send"></i> Save & Send
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Table Section -->
+        <section class="table-section" id="tableSection">
+            <div class="table-header">
+                <div class="table-actions">
+                    <button class="btn-reassign">
+                        <i class="bi bi-arrow-repeat"></i> Reassign
+                    </button>
+                    <button class="btn-escalate">
+                        <i class="bi bi-arrow-up-circle"></i> Escalate
+                    </button>
+                </div>
+                <div class="table-meta">
+                    <div class="items-per-page">
+                        <span>Showing</span>
+                        <select id="itemsPerPage">
+                            <option>25</option>
+                            <option>50</option>
+                            <option>100</option>
+                        </select>
+                        <span>items per page</span>
+                    </div>
+                    <button class="btn-raise" id="raiseTicketBtn">
+                        <i class="bi bi-plus-circle"></i> Raise Ticket
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="ticket-table table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" class="form-check-input" id="selectAll">
+                            </th>
+                            <th>Ticket ID</th>
+                            <th>Ticket Title</th>
+                            <th>Issue Type</th>
+                            <th>Status</th>
+                            <th>Department</th>
+                            <th>Sub Department</th>
+                            <th>Created Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketTableBody">
+                        <tr data-user-ticket="true">
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9716</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Request to Update Configuration and Execute Query in NRL Live
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-new">New</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Deployment</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr data-user-ticket="true">
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9714</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Service Installation
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-new">New</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Release</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr data-user-ticket="true">
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9712</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Request to Update Configuration and Execute Query in NRL Live
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-new">New</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Data Management</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9710</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Service Installation
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-new">New</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Content Management</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9708</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Request to Update Configuration and Execute Query in NRL Live
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>DB Admin</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9706</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Service Installation
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-new">New</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Deployment</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9704</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Request to Update Configuration and Execute Query in NRL Live
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>HRMS Tickets</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input row-checkbox">
+                            </td>
+                            <td><strong>revalsys-9702</strong></td>
+                            <td>
+                                <i class="bi bi-file-text"></i>
+                                Service Installation
+                            </td>
+                            <td>Production</td>
+                            <td><span class="status-badge status-closed">Closed</span></td>
+                            <td>Revalsys System Admin</td>
+                            <td>Others</td>
+                            <td>22 Jul 2025<br>18:07</td>
+                            <td>
+                                <button class="action-menu">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrapper">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">End</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/script.js"></script>
+    
+</body>
+</html>
